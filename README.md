@@ -74,20 +74,114 @@ To be added.
 We provide a simple demo to run the baseline model.
 
 ### 1. **Preparing conda env**
-To be added.
 
+
+The code is built with following libraries:
+
+- Python >= 3.8, \<3.9
+- OpenMPI = 4.0.4 and mpi4py = 3.0.3 (Needed for torchpack)
+- Pillow = 8.4.0 (see [here](https://github.com/mit-han-lab/bevfusion/issues/63))
+- [PyTorch](https://github.com/pytorch/pytorch) >= 1.9, \<= 1.10.2
+- [tqdm](https://github.com/tqdm/tqdm)
+- [torchpack](https://github.com/mit-han-lab/torchpack)
+- [mmcv](https://github.com/open-mmlab/mmcv) = 1.4.0
+- [mmdetection](http://github.com/open-mmlab/mmdetection) = 2.20.0
+
+After installing these dependencies, please run this command to install the codebase:
+
+```bash
+cd projects/bevfusion
+python setup.py develop
+```
+
+We also provide a [Dockerfile](projects/bevfusion/docker/Dockerfile) to ease environment setup. To get started with docker, please make sure that `docker` is installed on your machine. After that, please execute the following command to build the docker image:
+
+```bash
+cd projects/bevfusion/docker && docker build . -t bevfusion
+```
+
+We can then run the docker with the following command:
+
+```bash
+docker run --gpus all -it -v `pwd`/../data:/dataset --shm-size 16g bevfusion /bin/bash
+```
+
+We recommend the users to run data preparation (instructions are available in the next section) outside the docker if possible. Note that the dataset directory should be an absolute path. Within the docker, please run the following command to clone our repo and install custom CUDA extensions:
+
+```bash
+git clone https://github.com/robosense2025/track3 && cd projects/bevfusion
+python setup.py develop
+```
+
+You can then create a symbolic link `data` to the `/dataset` directory in the docker.
 
 ### 2. **Prepare the dataset**
-To be added.
 
+Add `dataset_utils` path to your `PYTHONPATH`. Edit `~/.bashrc` or `~/.zshrc`:
+
+```bash
+export PYTHONPATH="$PYTHONPATH:/[YOUR_PARENT_FOLDER]/track3/projects/dataset_utils"
+```
+
+Apply the change:
+```bash
+source ~/.bashrc  # or ~/.zshrc
+```
+
+Please follow the dataset from [here](). Our dataset is in `nuScenes` format, but requires our customized tools.
+
+We typically need to organize the useful data information with a .pkl or .json file in a specific style for organizing annotations.
+To prepare these files, run the following command:
+
+```bash
+python tools/create_data.py nuscenes --root-path ./data/nuscenes --out-dir ./data/nuscenes --extra-tag nuscenes
+```
+
+After data preparation, you will be able to see the following directory structure (as is indicated in mmdetection3d):
+
+```
+mmdetection3d
+├── mmdet3d
+├── tools
+├── configs
+├── data
+│   ├── nuscenes
+│   │   ├── maps
+│   │   ├── samples
+│   │   ├── v1.0-test
+|   |   ├── v1.0-trainval
+│   │   ├── nuscenes_database
+│   │   ├── nuscenes_infos_train.pkl
+│   │   ├── nuscenes_infos_val.pkl
+│   │   ├── nuscenes_infos_test.pkl
+│   │   ├── nuscenes_dbinfos_train.pkl
+
+```
 
 ### 3. **Deploy**
 To be added.
 
+### Training
+
+For LiDAR detector, please run:
+
+```bash
+torchpack dist-run -np 8 python tools/train.py configs/nuscenes/det/transfusion/secfpn/lidar/voxelnet_0p075.yaml
+```
 
 ### 4. Evaluate the baseline
-To be added.
 
+You will be able to run:
+
+```bash
+torchpack dist-run -np 8 python tools/test.py [config file path] pretrained/[checkpoint name].pth --eval [evaluation type]
+```
+
+For example:
+
+```bash
+torchpack dist-run -np 8 python tools/test.py configs/nuscenes/det/transfusion/secfpn/lidar/voxelnet_0p075.yaml pretrained/track3-baseline.pth --eval bbox
+```
 
 
 ## 🎖️ Challenge Participation
@@ -97,7 +191,8 @@ To be added.
 
 
 ## 📏 Evaluation Metrics
-To be added.
+
+The evaluation metrics are same as nuScenes. (Do not install the official `nuscenes-devkit`, as it may cause compatibility issues.)
 
 
 
@@ -133,7 +228,7 @@ If you use the code and dataset in your research, please cite:
 @inproceedings{li2024place3d,
   title = {Is Your LiDAR Placement Optimized for 3D Scene Understanding?},
   author = {Ye Li and Lingdong Kong and Hanjiang Hu and Xiaohao Xu and Xiaonan Huang},
-  jbooktitle = {Advances in Neural Information Processing Systems},
+  booktitle = {Advances in Neural Information Processing Systems},
   year = {2024}
 }
 ```
