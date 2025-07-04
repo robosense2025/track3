@@ -1,0 +1,13 @@
+Pillow==8.4.0
+tqdm
+torchpack
+mmcv==1.4.0 mmcv-full==1.4.0 mmdet==2.20.0
+mpi4py==3.0.3
+numba==0.48.0
+numpy==1.23
+scikit-learn
+pyquaternion
+shapely
+descartes
+yapf==0.40.1
+setuptools==59.5.0

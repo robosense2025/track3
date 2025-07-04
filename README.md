@@ -53,8 +53,7 @@ To be added.
 
 ## 📊 Official Dataset
 
-To be added.
-
+The track 3 [dataset](https://huggingface.co/datasets/robosense/datasets/tree/main/track3-sensor-placement) is prepared using data and settings from the [Place3D](https://github.com/ywyeli/Place3D) framework.
 
 
 ### Dataset Statistics
@@ -86,6 +85,7 @@ The code is built with following libraries:
 - [torchpack](https://github.com/mit-han-lab/torchpack)
 - [mmcv](https://github.com/open-mmlab/mmcv) = 1.4.0
 - [mmdetection](http://github.com/open-mmlab/mmdetection) = 2.20.0
+- numpy = 1.23
 
 After installing these dependencies, please run this command to install the codebase:
 
@@ -128,7 +128,7 @@ Apply the change:
 source ~/.bashrc  # or ~/.zshrc
 ```
 
-Please follow the dataset from [here](). Our dataset is in `nuScenes` format, but requires our customized tools.
+Please download the dataset from [here](https://huggingface.co/datasets/robosense/datasets/tree/main/track3-sensor-placement). Our dataset is in `nuScenes` format, but requires our customized tools.
 
 We typically need to organize the useful data information with a .pkl or .json file in a specific style for organizing annotations.
 To prepare these files, run the following command:
@@ -207,7 +207,7 @@ The evaluation metrics are same as nuScenes. (Do not install the official `nusce
 
 - **Challenge Website**: [robosense2025.github.io](https://robosense2025.github.io/)
 - **Track Details**: [Track 3 Page](https://robosense2025.github.io/track3)
-- **Track Dataset**: 
+- **Track Dataset**: [HuggingFace Page](https://huggingface.co/datasets/robosense/datasets/tree/main/track3-sensor-placement)
 - **Baseline Model**: 
 - **Related Paper**: [arXiv:2403.17009](https://arxiv.org/abs/2403.17009)
 

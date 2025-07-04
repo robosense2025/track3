@@ -6,7 +6,7 @@ load_dim: 5
 use_dim: 5
 load_augmented: null
 
-point_cloud_range: [-51.2, -51.2, -5.0, 51.2, 51.2, 3.0]
+point_cloud_range: [-102.4, -102.4, -5.0, 102.4, 102.4, 3.0]
 voxel_size: [0.1, 0.1, 0.2]
 image_size: [256, 704]
 
@@ -101,13 +101,13 @@ train_pipeline:
       sample_groups:
         car: 2
         truck: 3
-        construction_vehicle: 7
+#        construction_vehicle: 7
         bus: 4
 #        trailer: 6
 #        barrier: 2
         motorcycle: 6
         bicycle: 6
-#        pedestrian: 2
+        pedestrian: 2
 #        traffic_cone: 2
       points_loader:
         type: LoadPointsFromFile
@@ -258,7 +258,7 @@ test_pipeline:
       - lidar_aug_matrix
 
 data:
-  samples_per_gpu: 4
+  samples_per_gpu: 2
   workers_per_gpu: 4
   train:
     type: CBGSDataset
