@@ -1,8 +1,9 @@
-# 🤖 RoboSense Track 3: Sensor Placement
+<h1 align="center">🤖 RoboSense Track 3:<br>Sensor Placement</h1>
+
 
 <div align="center">
 
-**Official Baseline Implementation for Track 3**
+**Official Baseline Implementation for [Track 3](https://robosense2025.github.io/track3)**
 
 *Based on Place3D -- "Is Your LiDAR Placement Optimized for 3D Scene Understanding?"*<br>(https://github.com/ywyeli/Place3D)
 
