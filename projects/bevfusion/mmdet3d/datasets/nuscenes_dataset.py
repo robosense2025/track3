@@ -280,8 +280,9 @@ class NuScenesDataset(Custom3DDataset):
                 camera2lidar[:3, 3] = camera_info["sensor2lidar_translation"]
                 data["camera2lidar"].append(camera2lidar)
 
-        annos = self.get_ann_info(index)
-        data["ann_info"] = annos
+        if not self.test_mode:
+            annos = self.get_ann_info(index)
+            data["ann_info"] = annos
         return data
 
     def get_ann_info(self, index):
@@ -435,6 +436,7 @@ class NuScenesDataset(Custom3DDataset):
         eval_set_map = {
             "v1.0-mini": "mini_val",
             "v1.0-trainval": "val",
+            "v1.0-test": "test",
         }
         nusc_eval = DetectionEval(
             nusc,
