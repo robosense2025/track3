@@ -188,7 +188,30 @@ torchpack dist-run -np 8 python tools/test.py configs/nuscenes/det/transfusion/s
 ## 🎖️ Challenge Participation
 
 ### Submission Requirements
-To be added.
+
+For Phase 1 submission, run the following command:
+
+```bash
+torchpack dist-run -np 1 python tools/test.py configs/nuscenes/det/transfusion/secfpn/lidar/voxelnet_0p075.yaml pretrained/track3-baseline.pth --eval bbox --eval-options 'jsonfile_prefix=[PATH_TO_YOUR_OUTPUT_DIR]'
+```
+
+For example:
+
+```bash
+torchpack dist-run -np 1 python tools/test.py configs/nuscenes/det/transfusion/secfpn/lidar/voxelnet_0p075.yaml pretrained/track3-baseline.pth --eval bbox --eval-options 'jsonfile_prefix=./results'
+```
+
+After running, you will find a file named `results_nusc.json` in `./results`. Zip this file and submit `results_nusc.zip` to Codabench. Codabench.
+
+For Phase 2 submission, in `/track3/projects/bevfusionconfigs/nuscenes/default.yaml`, 
+
+1. update line `289` to `ann_file: ${dataset_root + "nuscenes_infos_test.pkl"}`.
+
+2. Comment out lines `207-211` that loads annotations (LoadAnnotations3D) in the test pipeline.
+
+3. Comment out lines `247-249` that includes the keys of gt data (Collect3D).
+
+Then, run the same command from Phase 1 after making the above changes.
 
 
 ## 📏 Evaluation Metrics
