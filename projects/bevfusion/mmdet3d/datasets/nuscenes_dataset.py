@@ -280,7 +280,7 @@ class NuScenesDataset(Custom3DDataset):
                 camera2lidar[:3, 3] = camera_info["sensor2lidar_translation"]
                 data["camera2lidar"].append(camera2lidar)
 
-        if not self.test_mode:
+        if not self.version == "v1.0-test":
             annos = self.get_ann_info(index)
             data["ann_info"] = annos
         return data
