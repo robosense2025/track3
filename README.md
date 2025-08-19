@@ -68,15 +68,15 @@ The dataset contains 200 scenes (8,000 frames) in total, split into 125 scenes (
 
 All LiDAR data from different placements are collected simultaneously, and they share the same metadata and annotation files. You can create symbolic links pointing to the desired data path, in order to conveniently switch between LiDAR placements.
 
-| File name | Description | split |
+| File name | Description | Split |
 |:-|:-|:-|
 | track3_phase1_lidar_blobs_only_placement_0 | LiDAR data, placement Center | train, val |
 | track3_phase1_lidar_blobs_only_placement_1 | LiDAR data, placement Line | train, val |
 | track3_phase1_lidar_blobs_only_placement_2 | LiDAR data, placement Trapezoid | train, val |
 | track3_phase1_lidar_blobs_only_placement_3 | LiDAR data, placement Pyramid | train, val |
 | track3_phase1_camera_blobs_only | Camera images of 6 views | train, val |
-| track3_phase1_sensor_file_blobs | LiDAR data of placement Center + Camera images | train, val |
-| track3_phase1_metadata | meta data including annotations (gt) | train, val |
+| track3_phase1_sensor_file_blobs | LiDAR (Center) + Camera data | train, val |
+| track3_phase1_metadata | metadata including annotations (gt) | train, val |
 | track3_phase1and2_map | maps | - |
 
 ### Dataset Statistics (Phase 2)
@@ -85,12 +85,12 @@ In Phase 2, we provide a test dataset that includes camera images from six views
 
 Please use the Phase 1 trainval dataset to train and validate your model, and then evaluate its performance on the Phase 2 test set. See the following sections for detailed instructions on how to submit your results.
 
-| File name | Description | split |
+| File name | Description | Split |
 |:-|:-|:-|
 | track3_phase2_lidar_blobs_only_test_part | LiDAR data | test |
 | track3_phase2_camera_blobs_only_test_part | Camera images of 6 views | test |
 | track3_phase2_sensor_file_blobs_test_part | LiDAR + Camera data | test |
-| track3_phase2_metadata | meta data without annotations (gt) | test |
+| track3_phase2_metadata | metadata without annotations (gt) | test |
 | track3_phase1and2_map | maps | - |
 
 
@@ -224,16 +224,16 @@ torchpack dist-run -np 8 python tools/test.py configs/nuscenes/det/transfusion/s
 For Phase 1 submission, run the following command:
 
 ```bash
-torchpack dist-run -np 1 python tools/test.py configs/nuscenes/det/transfusion/secfpn/lidar/voxelnet_0p075.yaml pretrained/track3-baseline.pth --eval bbox --eval-options 'jsonfile_prefix=[PATH_TO_YOUR_OUTPUT_DIR]'
+torchpack dist-run -np 8 python tools/test.py [config file path] pretrained/[checkpoint name].pth --eval bbox --eval-options 'jsonfile_prefix=./results'
 ```
 
 For example:
 
 ```bash
-torchpack dist-run -np 1 python tools/test.py configs/nuscenes/det/transfusion/secfpn/lidar/voxelnet_0p075.yaml pretrained/track3-baseline.pth --eval bbox --eval-options 'jsonfile_prefix=./results'
+torchpack dist-run -np 8 python tools/test.py configs/nuscenes/det/transfusion/secfpn/lidar/voxelnet_0p075.yaml pretrained/track3-baseline.pth --eval bbox --eval-options 'jsonfile_prefix=./results'
 ```
 
-After running, you will find a file named `results_nusc.json` in `./results`. Zip this file and submit `results_nusc.zip` to Codabench. Codabench.
+After running, you will find a file named `results_nusc.json` in `./results`. Zip this file and submit `results_nusc.zip` to Codabench.
 
 For Phase 2 submission, in `/track3/projects/bevfusionconfigs/nuscenes/default.yaml`, 
 
@@ -264,7 +264,7 @@ The evaluation metrics are same as nuScenes. (Do not install the official `nusce
 - **Challenge Website**: [robosense2025.github.io](https://robosense2025.github.io/)
 - **Track Details**: [Track 3 Page](https://robosense2025.github.io/track3)
 - **Track Dataset**: [HuggingFace Page](https://huggingface.co/datasets/robosense/datasets/tree/main/track3-sensor-placement)
-- **Baseline Model**: 
+- **Baseline Model**: [HuggingFace Page](https://huggingface.co/datasets/robosense/datasets/tree/main/track3-sensor-placement)
 - **Related Paper**: [arXiv:2403.17009](https://arxiv.org/abs/2403.17009)
 
 
