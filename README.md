@@ -56,10 +56,42 @@ To be added.
 
 The track 3 [dataset](https://huggingface.co/datasets/robosense/datasets/tree/main/track3-sensor-placement) is prepared using data and settings from the [Place3D](https://github.com/ywyeli/Place3D) framework.
 
+<p align="center">
+  <img src="docs/figures/placement.png" align="center" width="85%">
+</p>
 
-### Dataset Statistics
+### Dataset Statistics (Phase 1)
 
-To be added.
+In Phase 1, we provide a trainval dataset consisting of camera images from six views and LiDAR data from four different placements. You may choose to train your model on one placement and validate it on others, or design methods that leverage all placements to achieve better generalization.
+
+The dataset contains 200 scenes (8,000 frames) in total, split into 125 scenes (5,000 frames) for training and 75 scenes (3,000 frames) for validation.
+
+All LiDAR data from different placements are collected simultaneously, and they share the same metadata and annotation files. You can create symbolic links pointing to the desired data path, in order to conveniently switch between LiDAR placements.
+
+| File name | Description | split |
+|:-|:-|:-|
+| track3_phase1_lidar_blobs_only_placement_0 | LiDAR data, placement Center | train, val |
+| track3_phase1_lidar_blobs_only_placement_1 | LiDAR data, placement Line | train, val |
+| track3_phase1_lidar_blobs_only_placement_2 | LiDAR data, placement Trapezoid | train, val |
+| track3_phase1_lidar_blobs_only_placement_3 | LiDAR data, placement Pyramid | train, val |
+| track3_phase1_camera_blobs_only | Camera images of 6 views | train, val |
+| track3_phase1_sensor_file_blobs | LiDAR data of placement Center + Camera images | train, val |
+| track3_phase1_metadata | meta data including annotations (gt) | train, val |
+| track3_phase1and2_map | maps | - |
+
+### Dataset Statistics (Phase 2)
+
+In Phase 2, we provide a test dataset that includes camera images from six views and LiDAR data from six different placements. All LiDAR data are organized in a single folder, so you do not need to switch paths when running tests.
+
+Please use the Phase 1 trainval dataset to train and validate your model, and then evaluate its performance on the Phase 2 test set. See the following sections for detailed instructions on how to submit your results.
+
+| File name | Description | split |
+|:-|:-|:-|
+| track3_phase2_lidar_blobs_only_test_part | LiDAR data | test |
+| track3_phase2_camera_blobs_only_test_part | Camera images of 6 views | test |
+| track3_phase2_sensor_file_blobs_test_part | LiDAR + Camera data | test |
+| track3_phase2_metadata | meta data without annotations (gt) | test |
+| track3_phase1and2_map | maps | - |
 
 
 
